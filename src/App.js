@@ -6,9 +6,9 @@ import Home from './components/Home';
 import Menu from './components/Menu';
 import Book from './components/Book';
 import About from './components/About';
-import Header from './components/Header'; // Import Header component
-import Nav from './components/Nav'; // Import Nav component
-import Footer from './components/Footer'; // Import Footer component
+import Header from './components/Header';
+import Nav from './components/Nav';
+import Footer from './components/Footer';
 
 function App() {
   return (
