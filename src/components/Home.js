@@ -6,7 +6,7 @@ import Highlights from './Highlights'; // Import Highlights component
 function Home() {
   return (
     <main>
-      <Hero /> 
+      <Hero />
       <Highlights />
     </main>
   );

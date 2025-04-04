@@ -1,74 +1,335 @@
+/* src/styles/Highlights.css */
+
+/* Import fonts */
+@import url('https://fonts.googleapis.com/css2?family=Markazi+Text:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Karla:wght@400;700&display=swap');
+
 .highlights {
-    padding: 40px 20px; /* Adjust padding as needed */
+  margin: 6% 20%;
+  padding: 40px 10%;
+  background-color: #EDEFEE; /* Light background to match the mockup */
+}
+
+.highlights-header {
+  display: flex;
+  justify-content: space-between; /* Title on the left, button on the right */
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.highlights-header h2 {
+  font-family: 'Markazi Text', serif;
+  font-size: 2.5rem;
+  font-weight: 500;
+  color: #000000;
+  margin: 0;
+}
+
+.menu-button {
+  background-color: #F4CE14; /* Yellow button to match the mockup */
+  color: #333333;
+  font-family: 'Karla', sans-serif;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.menu-button:hover {
+  background-color: #d4ae0a;
+  transform: translateY(-2px);
+}
+
+.menu-button:active {
+  transform: translateY(0);
+}
+
+.specials {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Three equal columns for the cards */
+  gap: 30px; /* Space between cards */
+}
+
+.special {
+  background-color: #FFFFFF; /* White background for cards */
+  border-radius: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  overflow: hidden; /* Ensure rounded corners apply to the image */
+  display: flex;
+  flex-direction: column;
+}
+
+.special img {
+  width: 100%;
+  height: 200px; /* Fixed height for images */
+  object-fit: cover; /* Ensure images cover the area without distortion */
+}
+
+.special-title {
+  display: flex;
+  justify-content: space-between; /* Title on the left, price on the right */
+  align-items: center;
+  margin: 15px 15px 0 15px;
+}
+
+.special h3 {
+  font-family: 'Karla', sans-serif;
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #000000;
+  margin: 0;
+}
+
+.price {
+  font-family: 'Karla', sans-serif;
+  font-size: 1rem;
+  font-weight: normal;
+  color: #EE9972; /* Orange color for price */
+}
+
+.special p {
+  font-family: 'Karla', sans-serif;
+  font-size: 1rem;
+  color: #333333;
+  margin: 10px 15px;
+  flex-grow: 1; /* Allow the paragraph to take up remaining space */
+}
+
+.order-button {
+  background-color: transparent;
+  color: #333333;
+  font-family: 'Karla', sans-serif;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  margin: 0 15px 15px 15px;
+  transition: color 0.3s ease;
+}
+
+.order-button:hover {
+  color: #F4CE14; /* Yellow on hover */
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 1400px) {
+  .highlights {
+    margin-top: 10%;
+
+    padding: 35px 5%;
   }
-  
-  .highlights-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-  }
-  
-  .highlights h2 {
-    font-size: 2em; /* Adjust as needed */
-  }
-  
-  .menu-button {
-    background-color: #f4ce14; /* Example color */
-    color: #333;
-    padding: 12px 25px;
-    border: none;
-    border-radius: 8px;
-    font-size: 1em;
-    cursor: pointer;
-  }
-  
-  .menu-button:hover {
-    background-color: #e0b70c; /* Slightly darker hover color */
-  }
-  
+}
+
+@media (min-width: 769px) and (max-width: 1150px) {
   .specials {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: 1fr; /* Stack cards vertically */
+    gap: 25px; /* Slightly smaller gap for stacked layout */
+  }
+
+  .special img {
+    height: 250px; /* Slightly larger images when stacked */
+  }
+
+  .special h3 {
+    font-size: 1.3rem; /* Slightly larger title for better readability */
+  }
+
+  .price {
+    font-size: 1.05rem;
+  }
+
+  .special p {
+    font-size: 1.05rem;
+  }
+
+  .order-button {
+    font-size: 1.05rem;
+  }
+}
+/* For screens up to 768px (tablets and smaller) */
+@media (max-width: 768px) {
+  .highlights {
+    margin-top: 10%;
+
+    padding: 35px 5%;
+  }
+
+  .highlights-header h2 {
+    font-size: 2.2rem;
+  }
+
+  .menu-button {
+    padding: 11px 22px;
+    font-size: 0.95rem;
+  }
+
+  .specials {
+    grid-template-columns: 1fr; /* Stack cards vertically */
     gap: 20px;
   }
-  
-  .special {
-    text-align: left;
-    background-color: #f9f9f9; /* Example background */
-    padding: 20px;
-    border-radius: 8px;
-  }
-  
+
   .special img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    margin-bottom: 15px;
+    height: 250px; /* Slightly larger images on smaller screens */
   }
-  
-  .special h3 {
-    font-size: 1.5em; /* Adjust as needed */
-    margin-bottom: 10px;
+}
+
+/* For screens up to 600px (larger phones in landscape, smaller tablets) */
+@media (max-width: 600px) {
+  .highlights {
+    margin-top: 10%;
+
+    padding: 30px 5%;
   }
-  
-  .special p {
-    font-size: 1em; /* Adjust as needed */
-    line-height: 1.6;
-    margin-bottom: 20px;
+
+  .highlights-header h2 {
+    font-size: 2rem;
   }
-  
-  .order-button {
-    background-color: #495e57; /* Example color */
-    color: #fff;
+
+  .menu-button {
     padding: 10px 20px;
-    border: none;
-    border-radius: 8px;
-    font-size: 0.9em;
-    cursor: pointer;
+    font-size: 0.9rem;
   }
-  
-  .order-button:hover {
-    background-color: #3d4e47; /* Slightly darker hover color */
+
+  .special img {
+    height: 230px;
   }
-  
+
+  .special h3 {
+    font-size: 1.2rem;
+  }
+
+  .price {
+    font-size: 0.95rem;
+  }
+
+  .special p {
+    font-size: 0.95rem;
+  }
+
+  .order-button {
+    font-size: 0.95rem;
+  }
+}
+
+/* For screens up to 428px (iPhone 14 Plus and similar) */
+@media (max-width: 428px) {
+  .highlights {
+    margin-top: 10%;
+
+    padding: 20px 5%;
+  }
+
+  .highlights-header {
+    flex-direction: column; /* Stack header elements */
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .highlights-header h2 {
+    font-size: 1.8rem;
+  }
+
+  .menu-button {
+    padding: 8px 15px;
+    font-size: 0.85rem;
+  }
+
+  .special img {
+    height: 200px;
+  }
+
+  .special h3 {
+    font-size: 1.1rem;
+  }
+
+  .price {
+    font-size: 0.9rem;
+  }
+
+  .special p {
+    font-size: 0.9rem;
+  }
+
+  .order-button {
+    font-size: 0.9rem;
+  }
+}
+
+/* For screens smaller than 428px (e.g., iPhone SE at 375px) */
+@media (max-width: 375px) {
+  .highlights {
+    margin-top: 10%;
+    padding: 15px 5%;
+  }
+
+  .highlights-header h2 {
+    font-size: 1.6rem;
+  }
+
+  .menu-button {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+
+  .special img {
+    height: 180px;
+  }
+
+  .special h3 {
+    font-size: 1rem;
+  }
+
+  .price {
+    font-size: 0.85rem;
+  }
+
+  .special p {
+    font-size: 0.85rem;
+  }
+
+  .order-button {
+    font-size: 0.85rem;
+  }
+}
+
+/* For very small screens (e.g., 320px and below) */
+@media (max-width: 320px) {
+  .highlights {
+    margin-top: 10%;
+    padding: 10px 5%;
+  }
+
+  .highlights-header h2 {
+    font-size: 1.4rem;
+  }
+
+  .menu-button {
+    padding: 5px 10px;
+    font-size: 0.75rem;
+  }
+
+  .special img {
+    height: 150px;
+  }
+
+  .special h3 {
+    font-size: 0.9rem;
+  }
+
+  .price {
+    font-size: 0.8rem;
+  }
+
+  .special p {
+    font-size: 0.8rem;
+  }
+
+  .order-button {
+    font-size: 0.8rem;
+  }
+}
