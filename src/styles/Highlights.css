@@ -1,0 +1,74 @@
+.highlights {
+    padding: 40px 20px; /* Adjust padding as needed */
+  }
+  
+  .highlights-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+  
+  .highlights h2 {
+    font-size: 2em; /* Adjust as needed */
+  }
+  
+  .menu-button {
+    background-color: #f4ce14; /* Example color */
+    color: #333;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    cursor: pointer;
+  }
+  
+  .menu-button:hover {
+    background-color: #e0b70c; /* Slightly darker hover color */
+  }
+  
+  .specials {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  .special {
+    text-align: left;
+    background-color: #f9f9f9; /* Example background */
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  .special img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 15px;
+  }
+  
+  .special h3 {
+    font-size: 1.5em; /* Adjust as needed */
+    margin-bottom: 10px;
+  }
+  
+  .special p {
+    font-size: 1em; /* Adjust as needed */
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  
+  .order-button {
+    background-color: #495e57; /* Example color */
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9em;
+    cursor: pointer;
+  }
+  
+  .order-button:hover {
+    background-color: #3d4e47; /* Slightly darker hover color */
+  }
+  

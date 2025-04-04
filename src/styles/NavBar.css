@@ -1,0 +1,32 @@
+.navbar {
+    display: flex;
+    justify-content: center; /* Center content horizontally */
+    align-items: center;
+    padding: 20px;
+  }
+
+.navbar nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+.navbar nav li {
+    margin: 0 15px;
+}
+
+.navbar nav a {
+    text-decoration: none;
+    color: #333;
+}
+
+.navbar nav a:hover {
+    color: #ffce45;
+}
+
+#logo {
+    max-width: 60vw;
+    max-height: 5vh;
+    margin-right: 20px; /* Add some space between logo and nav */
+}

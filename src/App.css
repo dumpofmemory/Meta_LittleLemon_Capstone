@@ -1,3 +1,125 @@
+body {
+  margin: 0;
+  font-family: sans-serif;
+  display: grid;
+  grid-template-rows: auto auto auto 1fr auto;
+  min-height: 100vh;
+  background-color: #f0f0f0;
+  padding: 0;
+}
+
+header, nav, main, footer {
+  padding: 20px;
+}
+
+header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+nav li {
+  margin: 0 15px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #333;
+}
+
+nav a:hover {
+  color: #ffce45;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+}
+
+.hero-text {
+  text-align: left;
+}
+
+.hero-image {
+  text-align: right;
+}
+
+.specials {
+  text-align: center;
+}
+
+.specials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.testimonials {
+  text-align: center;
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+footer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 20px;
+}
+
+footer-logo {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+}
+
+footer-description {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+}
+
+footer-links {
+  grid-column: 1 / -1;
+  grid-row: 2 / 3;
+  text-align: center;
+}
+
+/* Existing Styles */
+#logo {
+  max-width: 60vw;
+}
+
+#footer-logo {
+  width: 80px;
+}
+
+h2, h3, p {
+  text-align: left;
+}
+
+article > a {
+  display: block;
+  text-align: left;
+}
+
+/* Booking Form Styles (unchanged) */
 .booking-form {
   max-width: 600px;
   margin: 0 auto;
@@ -38,150 +160,4 @@ button {
 
 button:hover {
   background-color: #555;
-}
-
-body {
-  background-color: #f0f0f0;
-  font-family: sans-serif;
-  margin: 0;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh; /* Ensure body covers full viewport height */
-}
-
-header {
-  text-align: center;
-  padding: 20px 0;
-}
-
-nav {
-  background-color: #333;
-  text-align: center;
-  padding: 10px 0;
-  border-radius: 10px;
-  margin: 20px;
-}
-
-nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex; /* Use flexbox for navigation links */
-  justify-content: center;
-}
-
-nav li {
-  margin: 0 15px;
-}
-
-nav a {
-  text-decoration: none;
-  color: #fff;
-}
-
-nav a:hover {
-  color: #ffce45;
-}
-
-main {
-  flex-grow: 1; /* Allow main to take up available space */
-  padding: 20px;
-}
-
-.banner {
-  position: relative;
-  padding: 30px;
-  text-align: center;
-  margin-bottom: 20px;
-  color: #fff;
-  border-radius: 10px;
-  background-image: url("pasta.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-clip: border-box; /* Ensure rounded corners work */
-}
-
-.overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.3);
-  border-radius: 10px; /* Match banner radius */
-}
-
-.banner h2, .banner p {
-  position: relative; /* Ensure text is above overlay */
-}
-
-.content {
-  display: flex; /* Use flexbox for content layout */
-  justify-content: space-between;
-  flex-wrap: wrap; /* Allow wrapping on smaller screens */
-  gap: 20px;
-}
-
-article {
-  background-color: #f9f8f8;
-  border: 1px solid none;
-  padding: 20px;
-  text-align: center;
-  border-radius: 10px; /* Rounded corners for articles */
-  flex: 1 1 300px; /* Distribute space and set a minimum width */
-  margin-bottom: 20px;
-}
-
-article img {
-  width: 100%;
-  height: auto;
-  margin-bottom: 10px;
-}
-
-footer {
-  padding: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.footer-logo {
-  text-align: left;
-}
-
-.copyright {
-  width: 300px;
-}
-
-.footer-line {
-  border-top: 1px solid #333;
-  width: 100%; /* Line takes full width of container */
-  margin-bottom: 5px; /* Add space between line and text */
-}
-
-.copyright p {
-  text-align: right;
-}
-
-a:hover {
-  color: #007bff;
-}
-
-#logo {
-  max-width: 60vw;
-}
-
-#footer-logo {
-  width: 80px;
-}
-
-h2, h3, p {
-  text-align: left;
-}
-
-article > a {
-  display: block;
-  text-align: left;
 }

@@ -1,7 +1,7 @@
-// components/Book.js
+// components/Reservations.js
 import React, { useState } from 'react';
 
-function Book() {
+function Reservations() {
   const [formData, setFormData] = useState({
     date: '',
     time: '',
@@ -147,4 +147,4 @@ function Book() {
   );
 }
 
-export default Book;
+export default Reservations;

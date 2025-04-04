@@ -1,25 +1,27 @@
 // App.js
 import React from 'react';
-import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
+import NavBar from './components/NavBar';
 import Home from './components/Home';
-import Menu from './components/Menu';
-import Book from './components/Book';
 import About from './components/About';
-import Header from './components/Header';
-import Nav from './components/Nav';
+import Menu from './components/Menu';
+import Reservations from './components/Reservations';
+import OrderOnline from './components/OrderOnline';
+import Login from './components/Login';
 import Footer from './components/Footer';
 
 function App() {
   return (
     <Router>
-      <Header />
-      <Nav />
+      <NavBar />
       <Routes>
         <Route index element={<Home />} />
-        <Route path="/menu" element={<Menu />} />
-        <Route path="/book" element={<Book />} />
         <Route path="/about" element={<About />} />
+        <Route path="/menu" element={<Menu />} />
+        <Route path="/reservations" element={<Reservations />} />
+        <Route path="/order-online" element={<OrderOnline />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
       <Footer />
     </Router>
