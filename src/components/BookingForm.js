@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
-function BookingForm({ initialDate, availableTimes, bookTime, selectedDate, setSelectedDate }) {
+function BookingForm({ initialDate, availableTimes, bookTime, selectedDate, setSelectedDate, updateTimes }) {
   const [formData, setFormData] = useState({
-    date: initialDate,
+    date: selectedDate || initialDate, // Use selectedDate if available, fallback to initialDate
     time: '',
     guests: '',
     occasion: '',
@@ -10,15 +10,18 @@ function BookingForm({ initialDate, availableTimes, bookTime, selectedDate, setS
 
   const [errors, setErrors] = useState({});
 
-  useEffect(() => {
-    setSelectedDate(initialDate); // Sync initial date with parent
-  }, [initialDate, setSelectedDate]);
+  // Remove useEffect to prevent resetting selectedDate
+  // useEffect(() => {
+  //   setSelectedDate(initialDate);
+  //   updateTimes(initialDate);
+  // }, [initialDate, setSelectedDate, updateTimes]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
     if (name === 'date') {
-      setSelectedDate(value); // Update selected date in parent
+      setSelectedDate(value); // Update parent's selectedDate
+      updateTimes(value); // Fetch times for the new date
     }
   };
 
@@ -37,12 +40,20 @@ function BookingForm({ initialDate, availableTimes, bookTime, selectedDate, setS
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      console.log('Reservation submitted:', formData);
-      bookTime(formData.date, formData.time);
-      alert('Reservation successful!');
-      setFormData({ date: initialDate, time: '', guests: '', occasion: '' });
-      setSelectedDate(initialDate); // Reset to today after booking
-      setErrors({});
+      const success = bookTime(formData.date, formData.time, formData);
+      if (success) {
+        console.log('Reservation submitted:', formData);
+        alert('Reservation successful!');
+        setFormData({
+          ...formData,
+          time: '',
+          guests: '',
+          occasion: '',
+        });
+        setErrors({});
+      } else {
+        alert('Failed to submit reservation. Please try again.');
+      }
     }
   };
 
