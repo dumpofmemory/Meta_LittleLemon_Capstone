@@ -1,14 +1,10 @@
 // components/Home.js
 import React from 'react';
-import Hero from './Hero'; // Import Hero component
-import Highlights from './Highlights'; // Import Highlights component
+import Main from './Main';
 
 function Home() {
   return (
-    <main>
-      <Hero />
-      <Highlights />
-    </main>
+    <Main />
   );
 }
 
