@@ -1,6 +1,7 @@
 // Hero.js
 import React from 'react';
-import '../styles/Hero.css'; // Create Hero.css
+import { Link } from 'react-router-dom';
+import '../styles/Hero.css';
 
 function Hero() {
   return (
@@ -12,7 +13,7 @@ function Hero() {
           We are a family-owned Mediterranean restaurant, focused on traditional
           recipes served with a modern twist.
         </p>
-        <button className="reserve-button">Reserve a Table</button>
+        <Link className="reserve-button" to="/reservations">Reserve a Table</Link>
       </div>
       <div className="hero-image">
         <img src="/images/hero-image.jpg" alt="Little Lemon Dishes" />
