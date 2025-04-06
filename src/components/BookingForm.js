@@ -1,8 +1,9 @@
+// src/BookingForm.js
 import React, { useState } from 'react';
 
-function BookingForm({ initialDate, availableTimes, bookTime, selectedDate, setSelectedDate, updateTimes }) {
+function BookingForm({ initialDate, availableTimes, bookTime, selectedDate, setSelectedDate, updateTimes, submitForm }) {
   const [formData, setFormData] = useState({
-    date: selectedDate || initialDate, // Use selectedDate if available, fallback to initialDate
+    date: selectedDate || initialDate,
     time: '',
     guests: '',
     occasion: '',
@@ -10,18 +11,12 @@ function BookingForm({ initialDate, availableTimes, bookTime, selectedDate, setS
 
   const [errors, setErrors] = useState({});
 
-  // Remove useEffect to prevent resetting selectedDate
-  // useEffect(() => {
-  //   setSelectedDate(initialDate);
-  //   updateTimes(initialDate);
-  // }, [initialDate, setSelectedDate, updateTimes]);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
     if (name === 'date') {
-      setSelectedDate(value); // Update parent's selectedDate
-      updateTimes(value); // Fetch times for the new date
+      setSelectedDate(value);
+      updateTimes(value);
     }
   };
 
@@ -40,10 +35,10 @@ function BookingForm({ initialDate, availableTimes, bookTime, selectedDate, setS
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      const success = bookTime(formData.date, formData.time, formData);
+      const success = submitForm(formData); // Call submitForm instead of bookTime
       if (success) {
         console.log('Reservation submitted:', formData);
-        alert('Reservation successful!');
+        alert('Reservation successful! Redirecting to confirmation...');
         setFormData({
           ...formData,
           time: '',
