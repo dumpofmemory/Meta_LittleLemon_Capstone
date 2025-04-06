@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import BookingForm from './BookingForm';
 import BookingSlot from './BookingSlot';
 import { fetchAPI, submitAPI } from '../api';
-// import '../styles/BookingForm.css';
+import '../styles/BookingPage.css';
 
 // Reducer for managing bookings by date
 const bookingsReducer = (state, action) => {
@@ -95,18 +95,18 @@ function BookingPage() {
   };
 
   return (
-    <main>
-      <section>
-        <h1>Reserve a Table at Little Lemon</h1>
-        <BookingForm
-          initialDate={today}
-          availableTimes={getAvailableTimes}
-          bookTime={bookTime}
-          selectedDate={selectedDate}
-          setSelectedDate={setSelectedDate}
-          updateTimes={updateTimes}
-          submitForm={submitForm}
-        />
+    <main className="booking-page-container">
+      <h1>Reserve a Table at Little Lemon</h1>
+      <BookingForm
+        initialDate={today}
+        availableTimes={getAvailableTimes}
+        bookTime={bookTime}
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
+        updateTimes={updateTimes}
+        submitForm={submitForm}
+      />
+      <section className="available-slots-section">
         <h2>Available Slots for {selectedDate}</h2>
         <ul>
           {getAvailableTimes(selectedDate).length > 0 ? (
@@ -114,7 +114,7 @@ function BookingPage() {
               <BookingSlot key={time} time={time} isAvailable={true} />
             ))
           ) : (
-            <li>No available slots for this date</li>
+            <li className="no-slots">No available slots for this date</li>
           )}
         </ul>
       </section>

@@ -1,13 +1,7 @@
 /* src/styles/Highlights.css */
-
-/* Import fonts */
-@import url('https://fonts.googleapis.com/css2?family=Markazi+Text:wght@400;500;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Karla:wght@400;700&display=swap');
-
 .highlights {
   margin: 6% 20%;
   padding: 40px 10%;
-  background-color: #EDEFEE; /* Light background to match the mockup */
 }
 
 .highlights-header {

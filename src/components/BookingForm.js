@@ -1,5 +1,6 @@
 // src/BookingForm.js
 import React, { useState } from 'react';
+import '../styles/BookingForm.css';
 
 function BookingForm({ initialDate, availableTimes, bookTime, selectedDate, setSelectedDate, updateTimes, submitForm }) {
   const [formData, setFormData] = useState({
@@ -51,7 +52,6 @@ function BookingForm({ initialDate, availableTimes, bookTime, selectedDate, setS
       const success = submitForm(formData);
       if (success) {
         console.log('Reservation submitted:', formData);
-        alert('Reservation successful! Redirecting to confirmation...');
         setFormData({
           ...formData,
           time: '',
@@ -66,13 +66,15 @@ function BookingForm({ initialDate, availableTimes, bookTime, selectedDate, setS
   };
 
   const today = new Date().toISOString().split('T')[0];
+   // Get available times for the current date in formData
+   const timesForSelectedDate = availableTimes(formData.date);
 
   return (
-    <section className="booking-form" aria-label="Table reservation form">
-      <h2>Book Your Table</h2>
+    <section className="booking-form-section" aria-label="Table reservation form">
+      <h2>Please fill out the form fields below</h2>
       <form
         onSubmit={handleSubmit}
-        style={{ display: 'grid', gap: '20px', maxWidth: '200px' }}
+        className="booking-form"
       >
         <div className="form-group">
           <label htmlFor="res-date">Choose Date:</label>
@@ -101,16 +103,22 @@ function BookingForm({ initialDate, availableTimes, bookTime, selectedDate, setS
             name="time"
             value={formData.time}
             onChange={handleChange}
-            required
+            required // HTML5 validation
             aria-required="true"
+             aria-invalid={!!errors.time}
             aria-describedby="time-error"
+            disabled={timesForSelectedDate.length === 0} // Disable if no times
           >
-            <option value="">Select a time</option>
-            {availableTimes(formData.date).map((time) => (
-              <option key={time} value={time}>
-                {time}
-              </option>
-            ))}
+            <option value="" disabled={formData.time !== ""}>Select a time</option>
+             {timesForSelectedDate.length > 0 ? (
+                timesForSelectedDate.map((time) => (
+                  <option key={time} value={time}>
+                    {time}
+                  </option>
+                ))
+             ) : (
+                 <option value="" disabled>No times available</option>
+             )}
           </select>
           {errors.time && (
             <span id="time-error" className="error" role="alert">
@@ -125,7 +133,7 @@ function BookingForm({ initialDate, availableTimes, bookTime, selectedDate, setS
             type="number"
             id="guests"
             name="guests"
-            placeholder="1"
+            placeholder="Number of guests"
             min="1" // Minimum 1 guest
             max="10" // Maximum 10 guests
             value={formData.guests}
