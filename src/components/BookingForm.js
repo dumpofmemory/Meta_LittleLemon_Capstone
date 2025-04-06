@@ -13,10 +13,14 @@ function BookingForm({ initialDate, availableTimes, bookTime, selectedDate, setS
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    let newValue = value;
+    if (name === 'guests') {
+      newValue = value === '' ? '' : parseInt(value, 10);
+    }
+    setFormData({ ...formData, [name]: newValue });
     if (name === 'date') {
-      setSelectedDate(value);
-      updateTimes(value);
+      setSelectedDate(newValue);
+      updateTimes(newValue);
     }
   };
 
@@ -24,7 +28,7 @@ function BookingForm({ initialDate, availableTimes, bookTime, selectedDate, setS
     let tempErrors = {};
     if (!formData.date) tempErrors.date = 'Date is required';
     if (!formData.time) tempErrors.time = 'Time is required';
-    if (!formData.guests || formData.guests < 1 || formData.guests > 10)
+    if (formData.guests === '' || !formData.guests || formData.guests < 1 || formData.guests > 10)
       tempErrors.guests = 'Number of guests must be between 1 and 10';
     if (!formData.occasion) tempErrors.occasion = 'Occasion is required';
 
@@ -148,7 +152,7 @@ function BookingForm({ initialDate, availableTimes, bookTime, selectedDate, setS
           )}
         </div>
 
-        <button type="submit">Make Your Reservation</button>
+        <button role="button" type="submit">Make Your Reservation</button>
       </form>
     </section>
   );

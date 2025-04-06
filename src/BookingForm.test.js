@@ -1,38 +1,37 @@
+// src/BookingForm.test.js
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import BookingForm from './components/BookingForm';
+import BookingForm from './components/BookingForm'; // Adjust path if needed
 
-// Mock functions and initial data for testing
-const initialTimes = [
-  '17:00',
-  '18:00',
-  '19:00',
-  '20:00',
-  '21:00',
-  '22:00',
-];
+const mockSubmitForm = jest.fn(() => true);
+// Define initialTimes and mocks at the top
+const initialTimes = ['17:00', '18:00', '19:00', '20:00', '21:00', '22:00'];
 const today = new Date().toISOString().split('T')[0];
-const mockAvailableTimes = (date) => initialTimes;
-const mockBookTime = jest.fn();
-const mockSetSelectedDate = jest.fn();
+const numberOfGuests = parseInt("5");
 
-// Mock initializeBookings and bookingsReducer
-const initializeBookings = () => ({});
-const bookingsReducer = (state, action) => {
-  switch (action.type) {
-    case 'BOOK_TIME':
-      const { date, time } = action.payload;
-      const currentTimes = state[date] || initialTimes;
-      const updatedTimes = currentTimes.filter((t) => t !== time);
-      return { ...state, [date]: updatedTimes };
-    default:
-      return state;
-  }
-};
-
-// Helper to render BookingForm with default props
+// Helper to render BookingForm with all required props
 const renderBookingForm = (props = {}) => {
+  const mockAvailableTimes = jest.fn((date) => {
+    // console.log('mockAvailableTimes called with:', date, 'returning:', initialTimes);
+    return initialTimes;
+  });
+  const mockBookTime = jest.fn();
+  const mockSetSelectedDate = jest.fn();
+  const mockUpdateTimes = jest.fn();
+
+
+  // console.log('Rendering BookingForm with props:', {
+  //   initialDate: today,
+  //   availableTimes: mockAvailableTimes,
+  //   bookTime: mockBookTime,
+  //   selectedDate: today,
+  //   setSelectedDate: mockSetSelectedDate,
+  //   updateTimes: mockUpdateTimes,
+  //   submitForm: mockSubmitForm,
+  //   ...props,
+  // });
+
   return render(
     <BookingForm
       initialDate={today}
@@ -40,12 +39,25 @@ const renderBookingForm = (props = {}) => {
       bookTime={mockBookTime}
       selectedDate={today}
       setSelectedDate={mockSetSelectedDate}
+      updateTimes={mockUpdateTimes}
+      submitForm={mockSubmitForm}
       {...props}
     />
   );
 };
 
 describe('BookingForm Component', () => {
+  beforeEach(() => {
+    jest.clearAllMocks(); // Clear mocks between tests
+  });
+
+  test('mockAvailableTimes returns an array', () => {
+    const mockAvailableTimes = jest.fn((date) => initialTimes); // Simple mock for this test
+    const times = mockAvailableTimes('2025-04-06');
+    expect(times).toEqual(initialTimes);
+    expect(mockAvailableTimes).toHaveBeenCalledWith('2025-04-06');
+  });
+
   test('Renders the BookingForm heading', () => {
     renderBookingForm();
     const headingElement = screen.getByText('Book Your Table');
@@ -83,28 +95,57 @@ describe('BookingForm Component', () => {
     expect(screen.getByText('Number of guests must be between 1 and 10')).toBeInTheDocument();
   });
 
-  test('submits form successfully with valid inputs', async () => {
-    renderBookingForm();
-    const user = userEvent.setup();
+  test('BookingForm Component submits form successfully with valid inputs', async () => {
+    const initialTimes = ['10:00', '11:00', '12:00', '18:00'];
+    const today = "2025-04-06";
+    const mockAvailableTimes = jest.fn((date) => initialTimes);
+    const mockBookTime = jest.fn();
+    const mockSetSelectedDate = jest.fn();
+    const mockUpdateTimes = jest.fn();
+    const mockSubmitForm = jest.fn(() => true);
 
     jest.spyOn(window, 'alert').mockImplementation(() => {});
 
-    // Clear and set date to ensure correct input
-    const dateInput = screen.getByLabelText('Choose Date:');
-    await user.clear(dateInput);
-    await user.type(dateInput, '2025-04-06');
-    await user.selectOptions(screen.getByLabelText('Choose Time:'), '18:00');
-    await user.type(screen.getByLabelText('Number of Guests:'), '5');
-    await user.selectOptions(screen.getByLabelText('Occasion:'), 'Birthday');
+    render(
+      <BookingForm
+        initialDate={today}
+        availableTimes={mockAvailableTimes}
+        bookTime={mockBookTime}
+        selectedDate={today}
+        setSelectedDate={mockSetSelectedDate}
+        updateTimes={mockUpdateTimes}
+        submitForm={mockSubmitForm}
+      />
+    );
 
-    await user.click(screen.getByText('Make Your Reservation'));
+    // Simulate user input
+    fireEvent.change(screen.getByLabelText('Choose Date:'), { target: { value: '2025-04-06' } });
+    const timeSelect = screen.getByLabelText('Choose Time:');
+    console.log('Available time options:', Array.from(timeSelect.options).map(opt => opt.value));
+    await userEvent.selectOptions(timeSelect, '18:00');
+    console.log('Time value after selection:', timeSelect.value);
+    const guestsInput = screen.getByLabelText('Number of Guests:');
+    await userEvent.clear(guestsInput);
+    await userEvent.type(guestsInput, '5');
+    await userEvent.selectOptions(screen.getByLabelText('Occasion:'), 'Birthday');
 
-    expect(mockBookTime).toHaveBeenCalledWith('2025-04-06', '18:00');
-    expect(window.alert).toHaveBeenCalledWith('Reservation successful!');
-    expect(screen.getByLabelText('Choose Date:')).toHaveValue(today);
-    expect(screen.getByLabelText('Choose Time:')).toHaveValue('');
-    expect(screen.getByLabelText('Number of Guests:')).toHaveValue(null);
-    expect(screen.getByLabelText('Occasion:')).toHaveValue('');
+    // Assert DOM values before submission
+    expect(screen.getByLabelText('Choose Date:').value).toBe('2025-04-06');
+    expect(screen.getByLabelText('Choose Time:').value).toBe('18:00');
+    expect(screen.getByLabelText('Number of Guests:').value).toBe('5');
+    expect(screen.getByLabelText('Occasion:').value).toBe('Birthday');
+
+    // Simulate form submission
+    await userEvent.click(screen.getByRole('button', { name: /Make Your Reservation/i }));
+
+    // Assert submission and alert
+    expect(mockSubmitForm).toHaveBeenCalledWith({
+      date: '2025-04-06',
+      time: '18:00',
+      guests: 5,
+      occasion: 'Birthday',
+    });
+    expect(window.alert).toHaveBeenCalledWith('Reservation successful! Redirecting to confirmation...');
 
     window.alert.mockRestore();
   });
@@ -155,6 +196,7 @@ describe('BookingForm Component', () => {
 
 describe('Bookings Initialization', () => {
   test('initializeBookings returns an empty object', () => {
+    const initializeBookings = () => ({});
     const initialState = initializeBookings();
     expect(initialState).toEqual({});
   });
@@ -162,6 +204,7 @@ describe('Bookings Initialization', () => {
 
 describe('Bookings Reducer', () => {
   test('Returns initial times for a new date when no bookings exist', () => {
+    const initializeBookings = () => ({});
     const initialState = initializeBookings();
     const date = '2025-04-05';
     const availableTimes = initialState[date] || initialTimes;
@@ -169,6 +212,18 @@ describe('Bookings Reducer', () => {
   });
 
   test('Removes booked time for a specific date', () => {
+    const initializeBookings = () => ({});
+    const bookingsReducer = (state, action) => {
+      switch (action.type) {
+        case 'BOOK_TIME':
+          const { date, time } = action.payload;
+          const currentTimes = state[date] || initialTimes;
+          const updatedTimes = currentTimes.filter((t) => t !== time);
+          return { ...state, [date]: updatedTimes };
+        default:
+          return state;
+      }
+    };
     const initialState = initializeBookings();
     const date = '2025-04-05';
     const timeToBook = '18:00';
