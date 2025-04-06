@@ -38,8 +38,17 @@ function BookingForm({ initialDate, availableTimes, bookTime, selectedDate, setS
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // Check HTML5 validity first
+    const form = e.target;
+    if (!form.checkValidity()) {
+      // If HTML5 validation fails, trigger custom validation to show errors
+      validateForm();
+      return;
+    }
+
+    // If HTML5 validation passes, run custom validation
     if (validateForm()) {
-      const success = submitForm(formData); // Call submitForm instead of bookTime
+      const success = submitForm(formData);
       if (success) {
         console.log('Reservation submitted:', formData);
         alert('Reservation successful! Redirecting to confirmation...');
@@ -56,12 +65,13 @@ function BookingForm({ initialDate, availableTimes, bookTime, selectedDate, setS
     }
   };
 
+  const today = new Date().toISOString().split('T')[0];
+
   return (
     <section className="booking-form" aria-label="Table reservation form">
       <h2>Book Your Table</h2>
       <form
         onSubmit={handleSubmit}
-        noValidate
         style={{ display: 'grid', gap: '20px', maxWidth: '200px' }}
       >
         <div className="form-group">
@@ -72,6 +82,7 @@ function BookingForm({ initialDate, availableTimes, bookTime, selectedDate, setS
             name="date"
             value={formData.date}
             onChange={handleChange}
+            min={today} // Prevent past dates
             required
             aria-required="true"
             aria-describedby="date-error"
@@ -115,8 +126,8 @@ function BookingForm({ initialDate, availableTimes, bookTime, selectedDate, setS
             id="guests"
             name="guests"
             placeholder="1"
-            min="1"
-            max="10"
+            min="1" // Minimum 1 guest
+            max="10" // Maximum 10 guests
             value={formData.guests}
             onChange={handleChange}
             required
@@ -152,7 +163,7 @@ function BookingForm({ initialDate, availableTimes, bookTime, selectedDate, setS
           )}
         </div>
 
-        <button role="button" type="submit">Make Your Reservation</button>
+        <button type="submit" role="button" aria-label="Make Your Reservation">Make Your Reservation</button>
       </form>
     </section>
   );
